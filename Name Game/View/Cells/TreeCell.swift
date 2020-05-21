@@ -10,22 +10,15 @@ import UIKit
 
 class TreeCell: UICollectionViewCell {
     var pictureData: Data?
-    let newSize = CGSize(width:( UIScreen.main.bounds.width - 20) / 2, height: (UIScreen.main.bounds.width - 20) / 2)
     
     @IBOutlet weak var treeImage: UIImageView!
     
-    func downloadImage(from url: URL) {
+    func downloadImage(from url: URL, imageSize: CGSize) {
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() { [weak self] in
-                let image = UIImage(data: data)
-
-                UIGraphicsBeginImageContextWithOptions(self!.newSize, false, 0.0)
-                image?.draw(in: CGRect(origin: CGPoint.zero, size: self!.newSize ), blendMode: .normal, alpha: 1.0)
-                let newImage = UIGraphicsGetImageFromCurrentImageContext()
-                UIGraphicsEndImageContext()
-
-                self?.treeImage.image = newImage
+                guard let image = UIImage(data: data) else { return }
+                self?.imageScalling(imageSize: imageSize, treeImage: image, overlayImage: nil)
                 self?.pictureData = data
             }
         }
@@ -35,24 +28,26 @@ class TreeCell: UICollectionViewCell {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
     
-    func saveImage(correctGuess: Bool = true) {
+    func updateImageGuess(imageSize: CGSize, correctGuess: Bool = true) {
         
-        let bottomImage = UIImage(data: pictureData!)!
-        var topImage: UIImage
-        
-        if correctGuess {
-            topImage = UIImage(named: "Frame 1")!
-        } else {
-            topImage = UIImage(named: "Frame 2")!
+        guard let pictureData = pictureData, let bottomImage = UIImage(data: pictureData) else { return }
+        let overlayImage = guessOverlay(correctGuess: correctGuess)
+        imageScalling(imageSize: imageSize, treeImage: bottomImage, overlayImage: overlayImage)
+    }
+    
+    func imageScalling(imageSize: CGSize, treeImage: UIImage, overlayImage: UIImage?) {
+        UIGraphicsBeginImageContextWithOptions(imageSize, false, 0.0)
+        treeImage.draw(in: CGRect(origin: CGPoint.zero, size: imageSize))
+        if let overlayImage = overlayImage {
+            overlayImage.draw(in: CGRect(origin: CGPoint.zero, size: imageSize ), blendMode: .normal, alpha: 0.5)
         }
-
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
-        
-        bottomImage.draw(in: CGRect(origin: CGPoint.zero, size: newSize))
-        topImage.draw(in: CGRect(origin: CGPoint.zero, size: newSize ), blendMode: .normal, alpha: 0.5)
-        
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        self.treeImage.image = newImage
+
+        self.treeImage.image = scaledImage
+    }
+   
+    func guessOverlay(correctGuess: Bool) -> UIImage {
+        return correctGuess ? UIImage(named: "Frame 1")! : UIImage(named: "Frame 2")!
     }
 }
