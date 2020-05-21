@@ -20,6 +20,7 @@
 		E367F562246F199C00E79B28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E367F560246F199C00E79B28 /* LaunchScreen.storyboard */; };
 		E367F56D246F199C00E79B28 /* Name_GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E367F56C246F199C00E79B28 /* Name_GameTests.swift */; };
 		E367F578246F199C00E79B28 /* Name_GameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E367F577246F199C00E79B28 /* Name_GameUITests.swift */; };
+		E3FF9C6F24770C2B00CE52D2 /* azure-pipelines.yml in Resources */ = {isa = PBXBuildFile; fileRef = E3FF9C6E24770C2B00CE52D2 /* azure-pipelines.yml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		E367F573246F199C00E79B28 /* Name GameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Name GameUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E367F577246F199C00E79B28 /* Name_GameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Name_GameUITests.swift; sourceTree = "<group>"; };
 		E367F579246F199C00E79B28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E3FF9C6E24770C2B00CE52D2 /* azure-pipelines.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = "azure-pipelines.yml"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				E367F56B246F199C00E79B28 /* Name GameTests */,
 				E367F576246F199C00E79B28 /* Name GameUITests */,
 				E367F550246F199A00E79B28 /* Products */,
+				E3FF9C6E24770C2B00CE52D2 /* azure-pipelines.yml */,
 			);
 			sourceTree = "<group>";
 		};
@@ -279,6 +282,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3FF9C6F24770C2B00CE52D2 /* azure-pipelines.yml in Resources */,
 				E367F562246F199C00E79B28 /* LaunchScreen.storyboard in Resources */,
 				E367F55F246F199C00E79B28 /* Assets.xcassets in Resources */,
 				E367F55A246F199A00E79B28 /* Main.storyboard in Resources */,
