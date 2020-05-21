@@ -19,7 +19,7 @@ class Networking {
             guard let data = data,                            // is there data
                 let response = response as? HTTPURLResponse,  // is there HTTP response
                 (200 ..< 300) ~= response.statusCode,         // is statusCode 2XX
-                error == nil else {                           // was there no error, otherwise ...
+                error == nil else {                           // was there no error, otherwise
                     DispatchQueue.main.async {
                         completion(nil, error!.localizedDescription)
                     }

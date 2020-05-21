@@ -10,7 +10,8 @@ import UIKit
 
 class TimeMode: UIViewController {
     
-    var cellViewSize: CGFloat?
+    var cellViewSize: CGFloat = 0
+    var imageSize: CGSize = CGSize(width: 0, height: 0)
     var timer:Timer?
     var timeLeft = 60
     
@@ -88,7 +89,7 @@ extension TimeMode: UICollectionViewDataSource{
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TimeCell", for: indexPath) as! TreeCell
         let tree = trees[(indexPath as NSIndexPath).row]
-        cell.downloadImage(from: URL(string: "https:\(tree.headshot.url ?? "")")!)
+        cell.downloadImage(from: URL(string: "https:\(tree.headshot.url ?? "")")!, imageSize: imageSize)
         
         return cell
     }
@@ -97,7 +98,7 @@ extension TimeMode: UICollectionViewDataSource{
         let cell = collectionView.cellForItem(at: indexPath) as! TreeCell
         if ( (indexPath as NSIndexPath).row == randomTargetIndex) {
             
-            cell.saveImage()
+            cell.updateImageGuess(imageSize: imageSize)
             score += 1
             
             Networking.getTrees { (response, error) in
@@ -112,7 +113,7 @@ extension TimeMode: UICollectionViewDataSource{
                 }
             }
         } else {
-            cell.saveImage(correctGuess: false)
+            cell.updateImageGuess(imageSize: imageSize, correctGuess: false)
         }
     }
 }
@@ -126,7 +127,8 @@ extension TimeMode: UICollectionViewDelegateFlowLayout  {
         let flowayout = collectionViewLayout as? UICollectionViewFlowLayout
         let space: CGFloat = (flowayout?.minimumInteritemSpacing ?? 0.0) + self.sectionInsets.left + self.sectionInsets.right
         cellViewSize = (collectionView.frame.size.width - space) / 2.0
-        return CGSize(width: cellViewSize!, height: cellViewSize!)
+        imageSize = CGSize(width: cellViewSize, height: cellViewSize)
+        return imageSize
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
